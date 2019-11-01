@@ -71,11 +71,11 @@ void myTask_Button(void){
 
 void myTask_Sensor(void){
 	if(adcVal[0] < 1000){
-//		timeOutLoop++;
-//		if(timeOutLoop > timeOutVal){
-//			HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_SET);
-//		}
-//		else
+		timeOutLoop++;
+		if(timeOutLoop > timeOutVal){
+			HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_SET);
+		}
+		else
 			bouncing3 = (bouncing3<<1)|1;
 	}
 

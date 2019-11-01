@@ -151,7 +151,6 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 
-
 //  myLedMatrix_Init();
 // // myLedMatrix_Init();
 //  for(uint8_t i = 0; i<8; i++){
