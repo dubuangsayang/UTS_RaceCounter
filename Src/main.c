@@ -197,6 +197,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+	  //Commit kedua//
 //	  for(uint8_t i=0; i<(88-8); i++){
 //		  for(uint8_t j=0; j<8; j++){
 //			  display[j] = text[j+i];
