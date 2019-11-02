@@ -10,9 +10,10 @@
 
 
 uint8_t lap_A, lap_B, lap_C;
-uint16_t miliSecond;
-uint8_t second,minute;
-uint8_t timeOut1, timeOut2, timeOut3, timeOut4, timeOut5, timeOutVal = 100;
+uint16_t miliSecond, miliSecond_A[3], miliSecond_B[3], miliSecond_C[3];
+uint8_t second, second_A[3], second_B[3], second_C[3];
+uint8_t minute, minute_A[3], minute_B[3], minute_C[3];
+uint8_t timeOut1, timeOut2, timeOut3, timeOut4, timeOut5, timeOutVal = 200;
 uint16_t refreshDisplay;
 unsigned char bouncing1=0xFF;
 unsigned char bouncing2=0xFF;
@@ -33,7 +34,7 @@ void myTask_init(void){
 void myTask_Stopwatch(void){
 	if(stopwatchEnable){
 		miliSecond++;
-		if(miliSecond>999){
+		if(miliSecond>99){
 			miliSecond=0;
 			second++;
 			if(second>59){
@@ -41,13 +42,20 @@ void myTask_Stopwatch(void){
 				minute++;
 			}
 		}
+		myLCD_setCursor(7, 0); myLCD_printNum(minute); myLCD_print(":");	myLCD_printNum(second); myLCD_print(".");	myLCD_printNum(miliSecond);
 	}
+
 }
 
 void myTask_StopwatchReset(void){
-	stopwatchEnable=0;
+
 	miliSecond=0; second=0; minute=0;
+	stopwatchEnable=0;
 	error=0;
+	myLCD_clear();
+	/* Reset value in track A */
+	lap_A=0;
+	miliSecond_A[0]=0;	miliSecond_A[1]=0;	miliSecond_A[2]=0;	miliSecond_A[3]=0;
 }
 
 void myTask_Run(void){
@@ -63,8 +71,11 @@ void myTask_Run(void){
 		timeOut1=0;
 		bouncing1 = bouncing1<<1;
 	}
-	if(bouncing1==3)
+	if(bouncing1==3){
 		stopwatchEnable = !(stopwatchEnable);
+		myTask_DisplayOut(stopwatchEnable);
+	}
+
 
 	/*	Reset Button */
 	if(pushReset){
@@ -94,6 +105,9 @@ void myTask_Run(void){
 
 	if(bouncing3==3){
 		lap_A++;
+		miliSecond_A[lap_A] = miliSecond;
+		second_A[lap_A] = second;
+		minute_A[lap_A] = minute;
 	}
 
 	/* Sensor channel 1 */
@@ -140,7 +154,7 @@ void myTask_ErrorMassage(_Bool state, char *msg){
 }
 
 void myTask_RefreshDisplay(void){
-	if(refreshDisplay++ > 10){
+	if(refreshDisplay++ > 5){
 		refreshDisplay = 0;
 		myLCD_clear();
 	}
@@ -148,14 +162,17 @@ void myTask_RefreshDisplay(void){
 
 void myTask_DisplayOut(_Bool state){
 	if(state){
-		myLCD_setCursor(0, 0);	myLCD_printNum(adcVal[0]);
-		myLCD_setCursor(0, 1);	myLCD_printNum(adcVal[1]);
-		myLCD_setCursor(0, 2);	myLCD_printNum(adcVal[2]);
-		myLCD_setCursor(0, 3);	myLCD_printNum(adcVal[3]);
-		myLCD_setCursor(10, 0);	myLCD_printNum(lap_A);
-		myLCD_setCursor(10, 1);	myLCD_printNum(lap_B);
-		myLCD_setCursor(10, 2);	myLCD_printNum(lap_C);
-		myTask_RefreshDisplay();
+//		myLCD_setCursor(0, 0);	myLCD_printNum(adcVal[0]);
+//		myLCD_setCursor(0, 1);	myLCD_printNum(adcVal[1]);
+//		myLCD_setCursor(0, 2);	myLCD_printNum(adcVal[2]);
+//		myLCD_setCursor(0, 3);	myLCD_printNum(adcVal[3]);
+		myLCD_setCursor(0, 0);	myLCD_print("Timer: ");
+		myLCD_setCursor(0, 1);	myLCD_printNum(lap_A);	myLCD_setCursor(2, 1);	myLCD_data(0x7E);
+		myLCD_setCursor(0, 2);	myLCD_printNum(lap_B);	myLCD_setCursor(2, 2);	myLCD_data(0x7E);
+		myLCD_setCursor(0, 3);	myLCD_printNum(lap_C);	myLCD_setCursor(2, 3);	myLCD_data(0x7E);
+		myLCD_setCursor(7, 1); 	myLCD_printNum(minute_A[lap_A]); myLCD_print(":");	myLCD_printNum(second_A[lap_A]); myLCD_print(".");	myLCD_printNum(miliSecond_A[lap_A]);
+//		myLCD_setCursor(7, 3);	myLCD_printNum(minute); myLCD_print(":");	myLCD_printNum(second); myLCD_print(".");	myLCD_printNum(miliSecond);
+//		myTask_RefreshDisplay();
 	}
 }
 

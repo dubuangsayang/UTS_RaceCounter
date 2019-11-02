@@ -224,7 +224,7 @@ void TIM2_IRQHandler(void)
   /* USER CODE END TIM2_IRQn 0 */
   HAL_TIM_IRQHandler(&htim2);
   /* USER CODE BEGIN TIM2_IRQn 1 */
-	myTask_Run();
+  myTask_Stopwatch();
   /* USER CODE END TIM2_IRQn 1 */
 }
 
@@ -239,7 +239,9 @@ void TIM3_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim3);
   /* USER CODE BEGIN TIM3_IRQn 1 */
   //HAL_GPIO_TogglePin(LCD_Bkl_GPIO_Port, LCD_Bkl_Pin);
-  myTask_Stopwatch();
+  myTask_Run();
+
+
 //  counter++;
 //  if(counter>1000){
 //	  counter=0;
