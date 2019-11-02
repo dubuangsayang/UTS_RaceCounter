@@ -11,10 +11,9 @@
 
 /* my Function Prototype */
 void myTask_init(void);
-void myTask_Button(void);
+void myTask_Run(void);
 void myTask_Stopwatch(void);
 void myTask_StopwatchReset(void);
-void myTask_Sensor(void);
 void myTask_ErrorMassage(_Bool state, char *msg);
 void myTask_RefreshDisplay(void);
 void myTask_DisplayOut(_Bool state);

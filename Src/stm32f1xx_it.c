@@ -225,8 +225,7 @@ void TIM2_IRQHandler(void)
 	HAL_TIM_IRQHandler(&htim2);
 
 	/* USER CODE BEGIN TIM2_IRQn 1 */
-	myTask_Button();
-	myTask_Sensor();
+	myTask_Run();
 	/* USER CODE END TIM2_IRQn 1 */
 }
 

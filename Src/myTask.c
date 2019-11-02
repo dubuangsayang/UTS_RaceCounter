@@ -53,7 +53,7 @@ void myTask_StopwatchReset(void){
 	error=0;
 }
 
-void myTask_Button(void){
+void myTask_Run(void){
 	/* Start Button */
 	if(pushStart){
 		if(timeOut1++ > timeOutVal){
@@ -82,9 +82,7 @@ void myTask_Button(void){
 	}
 	if(bouncing2==3)
 		myTask_StopwatchReset();
-}
 
-void myTask_Sensor(void){
 	/* Sensor channel 0 */
 	if(adcVal[0] < 1000){
 		if(timeOut3++ > timeOutVal)
@@ -129,7 +127,7 @@ void myTask_Sensor(void){
 		bouncing5 = bouncing5<<1;
 	}
 
-	if(bouncing3==3){
+	if(bouncing5==3){
 		lap_C++;
 	}
 
