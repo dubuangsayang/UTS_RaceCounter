@@ -26,20 +26,4 @@ void myLedMatrix_setledon(uint8_t ledmatrix, uint8_t lednum);
 void myLedMatrix_setledoff(uint8_t ledmatrix, uint8_t lednum);
 void myLedMatrix_setintensity(uint8_t ledmatrix, uint8_t intensity);
 
-
-
-//uint16_t i;
-//#define Ser_Clk()			{ HAL_GPIO_WritePin(Ser_Clk_GPIO_Port, Ser_Clk_Pin,GPIO_PIN_SET);\
-//							  HAL_Delay(1);\
-//							  HAL_GPIO_WritePin(Ser_Clk_GPIO_Port, Ser_Clk_Pin, GPIO_PIN_RESET);\
-//							  HAL_Delay(1);}
-//#define Ser_Load()			{ HAL_GPIO_WritePin(Ser_Load_GPIO_Port, Ser_Load_Pin, GPIO_PIN_SET);\
-//							  HAL_Delay(1);\
-//							  HAL_GPIO_WritePin(Ser_Load_GPIO_Port, Ser_Load_Pin, GPIO_PIN_RESET);\
-//							  HAL_Delay(1); }
-//#define Ser_Data(state)		{ HAL_GPIO_WritePin(Ser_Data_GPIO_Port, Ser_Data_Pin, (state)? GPIO_PIN_SET: GPIO_PIN_RESET); }
-//
-//void myLedMatrix_Init(void);
-//void myLedMatrix_Write(uint8_t addr, uint8_t data, uint8_t n);
-
 #endif /* INC_MYLEDMATRIX_H_ */

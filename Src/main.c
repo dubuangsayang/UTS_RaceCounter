@@ -186,7 +186,6 @@ int main(void)
   myLedMatrix_reset(0);
   myLedMatrix_reset(1);
 
-
  // myLCD_setCursor(0, 3);	myLCD_print("PROJECT UTS BALAP");
 
 
@@ -413,7 +412,6 @@ static void MX_TIM2_Init(void)
 {
 
   /* USER CODE BEGIN TIM2_Init 0 */
-
   /* USER CODE END TIM2_Init 0 */
 
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
@@ -437,6 +435,7 @@ static void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
+
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
