@@ -4,14 +4,11 @@
  *  Created on: Oct 29, 2019
  *      Author: Andi
  */
-#include "stm32f1xx_hal.h"
-#include "main.h"
-#include "myTask.h"
-#include "myLCD.h"
-#include "myHardware.h"
-#include "myADC.h"
 
 /*	my Variable */
+#include "myTask.h"
+
+
 uint8_t lap_A, lap_B, lap_C;
 uint16_t miliSecond;
 uint8_t second,minute;

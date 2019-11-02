@@ -27,7 +27,7 @@
 #include "myLCD.h"
 #include "myTask.h"
 #include "myHardware.h"
-#include "myADC.h"
+//#include "myADC.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -79,7 +79,6 @@ uint8_t display2[8], display3[8], display4[8];
 ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
 
-TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 
@@ -96,10 +95,9 @@ uint32_t nilaiAdc[4];
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_USART1_UART_Init(void);
 static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
-static void MX_TIM1_Init(void);
-static void MX_USART1_UART_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
@@ -125,17 +123,16 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+
+	HAL_Init();
 
   /* USER CODE BEGIN Init */
 
 
   /* USER CODE END Init */
 
-  /* Configure the syst
-   * em clock */
+  /* Configure the system clock */
   SystemClock_Config();
-
 
   /* USER CODE BEGIN SysInit */
 
@@ -143,10 +140,9 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_USART1_UART_Init();
   MX_DMA_Init();
   MX_ADC1_Init();
-  MX_TIM1_Init();
-  MX_USART1_UART_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
@@ -161,19 +157,19 @@ int main(void)
 //    	  }
 
   myTask_init();
-  myADC_start();
+//  myADC_start();
   myLCD_init();
   myLCD_Bkl(1);
   //myLCD_setCursor(0, 0);	myLCD_print("--ASSALAMUALAIKUM---");
   //myLCD_setCursor(0, 1);	myLCD_print("ANDI MEI PRASETYO I");
   //myLCD_setCursor(0, 2);	myLCD_print("1110171035");
 
-
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)adcVal, 4);
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim3);
 
   //readADC();
-  //HAL_ADC_Start_DMA(&hadc1, (uint32_t *)nilaiAdc, 4);
+
   //HAL_Delay(1000);
  // myLCD_clear();
   myLedMatrix_init();
@@ -230,10 +226,10 @@ int main(void)
 //	 myLCD_setCursor(0, 2);	myLCD_printNum(adcVal[2]);
 //	 myLCD_setCursor(10, 2);myLCD_printNum(adcVal[3]);
 //
-////	 myLCD_setCursor(0, 0);	myLCD_printNum(nilaiAdc[0]);
-////	 myLCD_setCursor(0, 1);	myLCD_printNum(nilaiAdc[1]);
-////	 myLCD_setCursor(0, 2);	myLCD_printNum(nilaiAdc[2]);
-////	 myLCD_setCursor(10, 2);myLCD_printNum(nilaiAdc[3]);
+//	 myLCD_setCursor(0, 0);	myLCD_printNum(nilaiAdc[0]);
+//	 myLCD_setCursor(0, 1);	myLCD_printNum(nilaiAdc[1]);
+//	 myLCD_setCursor(0, 2);	myLCD_printNum(nilaiAdc[2]);
+//	 myLCD_setCursor(10, 2);myLCD_printNum(nilaiAdc[3]);
 //	 HAL_Delay(20);
 	// myLCD_clear();
 
@@ -358,52 +354,6 @@ static void MX_ADC1_Init(void)
 }
 
 /**
-  * @brief TIM1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM1_Init(void)
-{
-
-  /* USER CODE BEGIN TIM1_Init 0 */
-
-  /* USER CODE END TIM1_Init 0 */
-
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM1_Init 1 */
-
-  /* USER CODE END TIM1_Init 1 */
-  htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0;
-  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 0;
-  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim1.Init.RepetitionCounter = 0;
-  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM1_Init 2 */
-
-  /* USER CODE END TIM1_Init 2 */
-
-}
-
-/**
   * @brief TIM2 Initialization Function
   * @param None
   * @retval None
@@ -435,7 +385,6 @@ static void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
-
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)

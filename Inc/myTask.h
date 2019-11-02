@@ -7,7 +7,16 @@
 
 #ifndef INC_MYTASK_H_
 #define INC_MYTASK_H_
+
+/* my Include */
 #include <stdint.h>
+#include "stm32f1xx_hal.h"
+#include "main.h"
+#include "myTask.h"
+#include "myLCD.h"
+#include "myHardware.h"
+//#include "myADC.h"
+
 
 /* my Function Prototype */
 void myTask_init(void);

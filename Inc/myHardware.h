@@ -11,6 +11,7 @@
 #define pushStart			 HAL_GPIO_ReadPin(PB_START_GPIO_Port, PB_START_Pin)==GPIO_PIN_RESET
 #define pushReset			 HAL_GPIO_ReadPin(PB_RESET_GPIO_Port, PB_RESET_Pin)==GPIO_PIN_RESET
 
-
+/* my Variable */
+uint32_t adcVal[3];
 
 #endif /* INC_MYHARDWARE_H_ */
