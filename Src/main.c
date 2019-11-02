@@ -96,12 +96,12 @@ uint32_t nilaiAdc[4];
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_DMA_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -132,10 +132,8 @@ int main(void)
 
   /* USER CODE END Init */
 
-  /* Configure the syst
-   * em clock */
+  /* Configure the system clock */
   SystemClock_Config();
-
 
   /* USER CODE BEGIN SysInit */
 
@@ -143,12 +141,12 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_USART1_UART_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
+  MX_DMA_Init();
   /* USER CODE BEGIN 2 */
 
 //  myLedMatrix_Init();
@@ -161,7 +159,7 @@ int main(void)
 //    	  }
 
   myTask_init();
-  myADC_start();
+//  myADC_start();
   myLCD_init();
   myLCD_Bkl(1);
   //myLCD_setCursor(0, 0);	myLCD_print("--ASSALAMUALAIKUM---");
@@ -173,7 +171,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim3);
 
   //readADC();
-  //HAL_ADC_Start_DMA(&hadc1, (uint32_t *)nilaiAdc, 4);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)nilaiAdc, 4);
   //HAL_Delay(1000);
  // myLCD_clear();
   myLedMatrix_init();
@@ -226,10 +224,10 @@ int main(void)
 //		 myLCD_printNum(trackA_milisecond);
 //		 while(pushStart);
 //	 }
-//	 myLCD_setCursor(0, 0);	myLCD_printNum(adcVal[0]);
-//	 myLCD_setCursor(0, 1);	myLCD_printNum(adcVal[1]);
-//	 myLCD_setCursor(0, 2);	myLCD_printNum(adcVal[2]);
-//	 myLCD_setCursor(10, 2);myLCD_printNum(adcVal[3]);
+	 myLCD_setCursor(0, 0);	myLCD_printNum(adcVal[0]);
+	 myLCD_setCursor(0, 1);	myLCD_printNum(adcVal[1]);
+	 myLCD_setCursor(0, 2);	myLCD_printNum(adcVal[2]);
+	 myLCD_setCursor(10, 2);myLCD_printNum(adcVal[3]);
 //
 ////	 myLCD_setCursor(0, 0);	myLCD_printNum(nilaiAdc[0]);
 ////	 myLCD_setCursor(0, 1);	myLCD_printNum(nilaiAdc[1]);
