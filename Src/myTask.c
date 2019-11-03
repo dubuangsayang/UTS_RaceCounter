@@ -22,7 +22,6 @@ uint8_t numberLap[10][8] = {
  * my Variable Lap
  */
 #define n 5
-
 uint16_t Dark[3];
 uint16_t Light[3]={4096, 4096, 4096};
 uint16_t Thrs[3];
@@ -111,6 +110,8 @@ void myTask_Run(void){
 		if(timeOut1++ > timeOutVal){
 			stopwatchEnable=0;
 			myTask_ErrorMassage(1, "Button Start Error !");
+			myUART_Println("ERROR : Button Start Timeout !");
+			myTask_Buzzer(1);
 		}
 		else
 			bouncing1 = (bouncing1<<1)|1;
@@ -129,6 +130,8 @@ void myTask_Run(void){
 		if(timeOut2++ > timeOutVal){
 			stopwatchEnable=0;
 			myTask_ErrorMassage(1, "Button Reset Error !");
+			myUART_Println("ERROR : Button Reset Timeout !");
+			myTask_Buzzer(1);
 		}
 		else
 			bouncing2 = (bouncing2<<1)|1;
@@ -137,8 +140,12 @@ void myTask_Run(void){
 		timeOut2=0;
 		bouncing2 = bouncing2<<1;
 	}
-	if(bouncing2==3)
+	if(bouncing2==3){
 		myTask_StopwatchReset();
+		myTask_Buzzer(0);
+
+	}
+
 
 	/*	Calibrate Sensor	*/
 	myTask_Calibrate(!stopwatchEnable);
@@ -151,7 +158,8 @@ void myTask_Run(void){
 				stopwatchEnable=0;
 				myLCD_clear();
 				myTask_ErrorMassage(1, "Sensor CH0 Error !");
-				myUART_Print("ERROR! : Sensor CH0 Timeout !");
+				myUART_Println("ERROR : Sensor CH0 Timeout !");
+				myTask_Buzzer(1);
 			}
 			else
 				bouncing3 = (bouncing3<<1)|1;
@@ -177,7 +185,8 @@ void myTask_Run(void){
 				stopwatchEnable=0;
 				myLCD_clear();
 				myTask_ErrorMassage(1, "Sensor CH1 Error !");
-				myUART_Print("ERROR! : Sensor CH1 Timeout !");
+				myUART_Println("ERROR : Sensor CH1 Timeout !");
+				myTask_Buzzer(1);
 			}
 
 			else
@@ -203,7 +212,8 @@ void myTask_Run(void){
 				stopwatchEnable=0;
 				myLCD_clear();
 				myTask_ErrorMassage(1, "Sensor CH2 Error !");
-				myUART_Print("ERROR! : Sensor CH2 Timeout !");
+				myUART_Println("ERROR : Sensor CH2 Timeout !");
+				myTask_Buzzer(1);
 			}
 
 			else
@@ -237,6 +247,10 @@ void myTask_RefreshDisplay(void){
 		refreshDisplay = 0;
 		myLCD_clear();
 	}
+}
+
+void myTask_Buzzer(_Bool state){
+	HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, (state)? GPIO_PIN_SET:GPIO_PIN_RESET);
 }
 
 void myTask_DisplayOut(_Bool state){

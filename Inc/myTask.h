@@ -29,5 +29,6 @@ void myTask_ErrorMassage(_Bool state, char *msg);
 void myTask_RefreshDisplay(void);
 void myTask_DisplayOut(_Bool state);
 void myTask_Calibrate(_Bool state);
+void myTask_Buzzer(_Bool state);
 
 #endif /* INC_MYTASK_H_ */
