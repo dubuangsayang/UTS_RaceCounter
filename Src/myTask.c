@@ -145,11 +145,13 @@ void myTask_Run(void){
 
 	}
 
+	/*	Calibrate Sensor	*/
+	myTask_Calibrate(!stopwatchEnable);
 
 	/* Sensor active when stopwatch enable */
 	if(stopwatchEnable){
 		/* Sensor channel 0 */
-		if(adcVal[0] < 500){
+		if(adcVal[0] < Thrs[0]){
 			if(timeOut3++ > timeOutVal){
 				stopwatchEnable=0;
 				myLCD_clear();
@@ -176,7 +178,7 @@ void myTask_Run(void){
 		}
 
 		/* Sensor channel 1 */
-		if(adcVal[1] < 500){
+		if(adcVal[1] < Thrs[1]){
 			if(timeOut4++ > timeOutVal){
 				stopwatchEnable=0;
 				myLCD_clear();
@@ -203,7 +205,7 @@ void myTask_Run(void){
 		}
 
 		/* Sensor channel 2 */
-		if(adcVal[2] < 500){
+		if(adcVal[2] < Thrs[2]){
 			if(timeOut5++ > timeOutVal){
 				stopwatchEnable=0;
 				myLCD_clear();
