@@ -22,6 +22,10 @@ uint8_t numberLap[10][8] = {
  * my Variable Lap
  */
 #define n 5
+
+uint16_t Dark[3];
+uint16_t Light[3]={4096, 4096, 4096};
+uint16_t Thrs[3];
 uint8_t lap_A, lap_B, lap_C, lap_D;
 uint16_t miliSecond, miliSecond_A[6], miliSecond_B[6], miliSecond_C[6];
 uint8_t second, second_A[6], second_B[6], second_C[6];
@@ -46,6 +50,18 @@ void myTask_init(void){
 	myLCD_init();
 	myLedMatrix_init();
 	myLedMatrix_setmatrix(1, numberLap[0]);
+}
+
+void myTask_Calibrate(_Bool state){
+	if(state){
+		for(uint8_t i=0; i<3; i++){
+			if(adcVal[i] < Light[i])
+				Light[i] = adcVal[i];
+			if(adcVal[i] > Dark[i])
+				Dark[i] = adcVal[i];
+			Thrs[i] = ((Light[i]+Dark[i])/2)-200;
+		}
+	}
 }
 
 void myTask_Stopwatch(void){
@@ -89,6 +105,7 @@ void myTask_StopwatchReset(void){
 }
 
 void myTask_Run(void){
+
 	/* Start Button */
 	if(pushStart){
 		if(timeOut1++ > timeOutVal){
@@ -123,14 +140,18 @@ void myTask_Run(void){
 	if(bouncing2==3)
 		myTask_StopwatchReset();
 
+	/*	Calibrate Sensor	*/
+	myTask_Calibrate(!stopwatchEnable);
+
 	/* Sensor active when stopwatch enable */
 	if(stopwatchEnable){
 		/* Sensor channel 0 */
-		if(adcVal[0] < 500){
+		if(adcVal[0] < Thrs[0]){
 			if(timeOut3++ > timeOutVal){
 				stopwatchEnable=0;
 				myLCD_clear();
 				myTask_ErrorMassage(1, "Sensor CH0 Error !");
+				myUART_Print("ERROR! : Sensor CH0 Timeout !");
 			}
 			else
 				bouncing3 = (bouncing3<<1)|1;
@@ -151,11 +172,12 @@ void myTask_Run(void){
 		}
 
 		/* Sensor channel 1 */
-		if(adcVal[1] < 500){
+		if(adcVal[1] < Thrs[1]){
 			if(timeOut4++ > timeOutVal){
 				stopwatchEnable=0;
 				myLCD_clear();
 				myTask_ErrorMassage(1, "Sensor CH1 Error !");
+				myUART_Print("ERROR! : Sensor CH1 Timeout !");
 			}
 
 			else
@@ -176,11 +198,12 @@ void myTask_Run(void){
 		}
 
 		/* Sensor channel 2 */
-		if(adcVal[2] < 500){
+		if(adcVal[2] < Thrs[2]){
 			if(timeOut5++ > timeOutVal){
 				stopwatchEnable=0;
 				myLCD_clear();
 				myTask_ErrorMassage(1, "Sensor CH2 Error !");
+				myUART_Print("ERROR! : Sensor CH2 Timeout !");
 			}
 
 			else
