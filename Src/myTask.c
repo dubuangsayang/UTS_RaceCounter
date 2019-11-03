@@ -22,6 +22,9 @@ uint8_t numberLap[10][8] = {
  * my Variable Lap
  */
 #define n 5
+uint16_t Dark[3];
+uint16_t Light[3]={4095, 4095, 4095};
+uint16_t Thrs[3];
 uint8_t lap_A, lap_B, lap_C, lap_D;
 uint16_t miliSecond, miliSecond_A[6], miliSecond_B[6], miliSecond_C[6];
 uint8_t second, second_A[6], second_B[6], second_C[6];
@@ -46,6 +49,18 @@ void myTask_init(void){
 	myLCD_init();
 	myLedMatrix_init();
 	myLedMatrix_setmatrix(1, numberLap[0]);
+}
+
+void myTask_Calibrate(_Bool state){
+	if(state){
+		for(uint8_t i=0; i<3; i++){
+			if(adcVal[i] < Light[i])
+				Light[i] = adcVal[i];
+			if(adcVal[i] > Dark[i])
+				Dark[i] = adcVal[i];
+			Thrs[i] = ((Light[i]+Dark[i])/2)-200;
+		}
+	}
 }
 
 void myTask_Stopwatch(void){
@@ -94,6 +109,8 @@ void myTask_Run(void){
 		if(timeOut1++ > timeOutVal){
 			stopwatchEnable=0;
 			myTask_ErrorMassage(1, "Button Start Error !");
+			myUART_Println("ERROR : Button Start Timeout !");
+			myTask_Buzzer(1);
 		}
 		else
 			bouncing1 = (bouncing1<<1)|1;
@@ -112,6 +129,8 @@ void myTask_Run(void){
 		if(timeOut2++ > timeOutVal){
 			stopwatchEnable=0;
 			myTask_ErrorMassage(1, "Button Reset Error !");
+			myUART_Println("ERROR : Button Reset Timeout !");
+			myTask_Buzzer(1);
 		}
 		else
 			bouncing2 = (bouncing2<<1)|1;
@@ -120,8 +139,12 @@ void myTask_Run(void){
 		timeOut2=0;
 		bouncing2 = bouncing2<<1;
 	}
-	if(bouncing2==3)
+	if(bouncing2==3){
 		myTask_StopwatchReset();
+		myTask_Buzzer(0);
+
+	}
+
 
 	/* Sensor active when stopwatch enable */
 	if(stopwatchEnable){
@@ -131,6 +154,8 @@ void myTask_Run(void){
 				stopwatchEnable=0;
 				myLCD_clear();
 				myTask_ErrorMassage(1, "Sensor CH0 Error !");
+				myUART_Println("ERROR : Sensor CH0 Timeout !");
+				myTask_Buzzer(1);
 			}
 			else
 				bouncing3 = (bouncing3<<1)|1;
@@ -156,6 +181,8 @@ void myTask_Run(void){
 				stopwatchEnable=0;
 				myLCD_clear();
 				myTask_ErrorMassage(1, "Sensor CH1 Error !");
+				myUART_Println("ERROR : Sensor CH1 Timeout !");
+				myTask_Buzzer(1);
 			}
 
 			else
@@ -181,6 +208,8 @@ void myTask_Run(void){
 				stopwatchEnable=0;
 				myLCD_clear();
 				myTask_ErrorMassage(1, "Sensor CH2 Error !");
+				myUART_Println("ERROR : Sensor CH2 Timeout !");
+				myTask_Buzzer(1);
 			}
 
 			else
@@ -214,6 +243,10 @@ void myTask_RefreshDisplay(void){
 		refreshDisplay = 0;
 		myLCD_clear();
 	}
+}
+
+void myTask_Buzzer(_Bool state){
+	HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, (state)? GPIO_PIN_SET:GPIO_PIN_RESET);
 }
 
 void myTask_DisplayOut(_Bool state){
