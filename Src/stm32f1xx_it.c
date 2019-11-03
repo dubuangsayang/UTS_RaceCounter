@@ -241,11 +241,6 @@ void TIM3_IRQHandler(void)
   //HAL_GPIO_TogglePin(LCD_Bkl_GPIO_Port, LCD_Bkl_Pin);
   myTask_Run();
 
-
-//  counter++;
-//  if(counter>1000){
-//	  counter=0;
-//	  HAL_GPIO_TogglePin(LCD_Bkl_GPIO_Port, LCD_Bkl_Pin);
 //  }
 
   /* USER CODE END TIM3_IRQn 1 */

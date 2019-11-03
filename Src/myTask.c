@@ -21,7 +21,7 @@ uint8_t numberLap[10][8] = {
 /*
  * my Variable Lap
  */
-#define n 5
+#define n 4
 uint16_t Dark[3];
 uint16_t Light[3]={4096, 4096, 4096};
 uint16_t Thrs[3];

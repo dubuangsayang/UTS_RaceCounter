@@ -17,8 +17,6 @@
 #include "myHardware.h"
 #include "myLedMatrix.h"
 #include "myUART.h"
-//#include "myADC.h"
-
 
 /* my Function Prototype */
 void myTask_init(void);
