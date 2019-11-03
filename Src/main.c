@@ -95,11 +95,15 @@ uint32_t nilaiAdc[4];
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+<<<<<<< HEAD
 static void MX_USART1_UART_Init(void);
 static void MX_DMA_Init(void);
+=======
+>>>>>>> master
 static void MX_ADC1_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_DMA_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -139,11 +143,15 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+<<<<<<< HEAD
   MX_USART1_UART_Init();
   MX_DMA_Init();
+=======
+>>>>>>> master
   MX_ADC1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
+  MX_DMA_Init();
   /* USER CODE BEGIN 2 */
 
 //  myLedMatrix_Init();
@@ -168,7 +176,11 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim3);
 
   //readADC();
+<<<<<<< HEAD
 
+=======
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)nilaiAdc, 4);
+>>>>>>> master
   //HAL_Delay(1000);
  // myLCD_clear();
   myLedMatrix_init();
@@ -220,10 +232,10 @@ int main(void)
 //		 myLCD_printNum(trackA_milisecond);
 //		 while(pushStart);
 //	 }
-//	 myLCD_setCursor(0, 0);	myLCD_printNum(adcVal[0]);
-//	 myLCD_setCursor(0, 1);	myLCD_printNum(adcVal[1]);
-//	 myLCD_setCursor(0, 2);	myLCD_printNum(adcVal[2]);
-//	 myLCD_setCursor(10, 2);myLCD_printNum(adcVal[3]);
+	 myLCD_setCursor(0, 0);	myLCD_printNum(adcVal[0]);
+	 myLCD_setCursor(0, 1);	myLCD_printNum(adcVal[1]);
+	 myLCD_setCursor(0, 2);	myLCD_printNum(adcVal[2]);
+	 myLCD_setCursor(10, 2);myLCD_printNum(adcVal[3]);
 //
 //	 myLCD_setCursor(0, 0);	myLCD_printNum(nilaiAdc[0]);
 //	 myLCD_setCursor(0, 1);	myLCD_printNum(nilaiAdc[1]);
