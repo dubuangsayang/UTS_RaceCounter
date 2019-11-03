@@ -43,6 +43,8 @@ uint8_t halo[8] = {
 	0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01
 };
 
+
+
 uint8_t text[88] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	//Space
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	//Space
@@ -78,27 +80,19 @@ uint8_t display2[8], display3[8], display4[8];
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
-
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
-
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-uint16_t trackA_milisecond;
-uint8_t trackA_second;
-uint8_t trackA_minute;
-
 uint32_t nilaiAdc[4];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-
 static void MX_USART1_UART_Init(void);
 static void MX_DMA_Init(void);
-
 static void MX_ADC1_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
@@ -122,7 +116,6 @@ int main(void)
 
   /* USER CODE END 1 */
   
-/* ini master*/
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -153,84 +146,27 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   myTask_init();
-//  myADC_start();
   myLCD_init();
   myLCD_Bkl(1);
-  //myLCD_setCursor(0, 0);	myLCD_print("--ASSALAMUALAIKUM---");
-  //myLCD_setCursor(0, 1);	myLCD_print("ANDI MEI PRASETYO I");
-  //myLCD_setCursor(0, 2);	myLCD_print("1110171035");
-
+//  myLedMatrix_init();
+//  myLedMatrix_setmatrix(1, numberLap[0]);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)adcVal, 4);
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim3);
-
-  //readADC();
-
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)nilaiAdc, 4);
-
-  //HAL_Delay(1000);
- // myLCD_clear();
-  myLedMatrix_init();
-
-  myLedMatrix_setmatrix(0, char_A);
-  myLedMatrix_setmatrix(1, char_N);
-  myLedMatrix_setmatrix(2, char_A);
-  myLedMatrix_setmatrix(3, halo);
-  HAL_Delay(2000);
-  myLedMatrix_reset(0);
-  myLedMatrix_reset(1);
-
- // myLCD_setCursor(0, 3);	myLCD_print("PROJECT UTS BALAP");
-
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-	  //Commit kedua//
-	  //Commit ketiga//
-//	  for(uint8_t i=0; i<(88-8); i++){
-//		  for(uint8_t j=0; j<8; j++){
-//			  display[j] = text[j+i];
-//			  display2[j] = text[j+i+7];
-//			  display3[j] = text[j+i+15];
-//			  display4[j] = text[j+i+23];
-//		  }
-//		  myLedMatrix_setmatrix(0, display);
-//		  myLedMatrix_setmatrix(1, display2);
-//		  myLedMatrix_setmatrix(2, display3);
-//		  myLedMatrix_setmatrix(3, display4);
-//		  //HAL_Delay(1);
+//	  for(uint8_t i=0; i<6; i++){
+//		  myLedMatrix_setmatrix(0, numberLap[i]);
+//		  myLedMatrix_setmatrix(1, numberLap[i]);
+//		  myLedMatrix_setmatrix(2, numberLap[i]);
+//		  HAL_Delay(600);
 //	  }
-	// myLCD_setCursor(0, 3);		myLCD_printNum(minute); myLCD_print(":"); myLCD_printNum(second); myLCD_print(":"); myLCD_printNum(miliSecond);
 
-	 //	 if(pushStart){
-//		 trackA_milisecond=miliSecond;
-//		 trackA_second=second;
-//		 trackA_minute=minute;
-//		 myLCD_clear();
-//
-//		 myLCD_setCursor(10, 3);
-//		 myLCD_printNum(trackA_minute);	myLCD_print(":");
-//		 myLCD_printNum(trackA_second); myLCD_print(":");
-//		 myLCD_printNum(trackA_milisecond);
-//		 while(pushStart);
-//	 }
-//	 myLCD_setCursor(0, 0);	myLCD_printNum(adcVal[0]);
-//	 myLCD_setCursor(0, 1);	myLCD_printNum(adcVal[1]);
-//	 myLCD_setCursor(0, 2);	myLCD_printNum(adcVal[2]);
-//	 myLCD_setCursor(10, 2);myLCD_printNum(adcVal[3]);
-//
-//	 myLCD_setCursor(0, 0);	myLCD_printNum(nilaiAdc[0]);
-//	 myLCD_setCursor(0, 1);	myLCD_printNum(nilaiAdc[1]);
-//	 myLCD_setCursor(0, 2);	myLCD_printNum(nilaiAdc[2]);
-//	 myLCD_setCursor(10, 2);myLCD_printNum(nilaiAdc[3]);
-//	 HAL_Delay(20);
-	// myLCD_clear();
-
+	/*	Nothing happen in while(1)	*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

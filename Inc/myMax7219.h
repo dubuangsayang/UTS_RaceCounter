@@ -13,13 +13,9 @@
 
 //define ports
 #define Ser_Clk()			{ HAL_GPIO_WritePin(Ser_Clk_GPIO_Port, Ser_Clk_Pin,GPIO_PIN_SET);\
-							  for(uint8_t i=0; i<255; i++);\
-							  HAL_GPIO_WritePin(Ser_Clk_GPIO_Port, Ser_Clk_Pin, GPIO_PIN_RESET);\
-							  for(uint8_t i=0; i<255; i++);}
+							  HAL_GPIO_WritePin(Ser_Clk_GPIO_Port, Ser_Clk_Pin, GPIO_PIN_RESET);}
 #define Ser_Load()			{ HAL_GPIO_WritePin(Ser_Load_GPIO_Port, Ser_Load_Pin, GPIO_PIN_SET);\
-							  for(uint8_t i=0; i<255; i++);\
-							  HAL_GPIO_WritePin(Ser_Load_GPIO_Port, Ser_Load_Pin, GPIO_PIN_RESET);\
-							 for(uint8_t i=0; i<255; i++); }
+							  HAL_GPIO_WritePin(Ser_Load_GPIO_Port, Ser_Load_Pin, GPIO_PIN_RESET);}
 #define Ser_Data(state)		{ HAL_GPIO_WritePin(Ser_Data_GPIO_Port, Ser_Data_Pin, (state)? GPIO_PIN_SET: GPIO_PIN_RESET); }
 
 //setup number of chip attached to the board

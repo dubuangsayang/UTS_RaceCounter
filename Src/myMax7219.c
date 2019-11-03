@@ -7,6 +7,10 @@
 
 #include "myMax7219.h"
 
+/*
+ * my variable
+ */
+
 
 /*
  * shift out a byte
