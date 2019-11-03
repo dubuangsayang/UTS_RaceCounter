@@ -152,15 +152,6 @@ int main(void)
   MX_DMA_Init();
   /* USER CODE BEGIN 2 */
 
-//  myLedMatrix_Init();
-// // myLedMatrix_Init();
-//  for(uint8_t i = 0; i<8; i++){
-//  		  myLedMatrix_Write(i+1, char_A[i],0);
-//  	  }
-//  for(uint8_t i = 0; i<8; i++){
-//    		  myLedMatrix_Write(i+1, halo[i],1);
-//    	  }
-
   myTask_init();
 //  myADC_start();
   myLCD_init();
