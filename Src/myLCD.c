@@ -6,6 +6,7 @@
  */
 
 #include "stm32f1xx_hal.h"
+#include "myHardware.h"
 #include "main.h"
 #include "myLCD.h"
 #include <stdio.h>

@@ -10,6 +10,7 @@
 
 #include "stdint.h"
 #include "main.h"
+#include "myHardware.h"
 
 //define ports
 #define Ser_Clk()			{ HAL_GPIO_WritePin(Ser_Clk_GPIO_Port, Ser_Clk_Pin,GPIO_PIN_SET);\
