@@ -23,6 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <string.h>
 #include "myLedMatrix.h"
 #include "myLCD.h"
 #include "myTask.h"
@@ -43,7 +44,7 @@ uint8_t halo[8] = {
 	0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01
 };
 
-
+char andi[] = "Andi";
 
 uint8_t text[88] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	//Space
@@ -98,7 +99,8 @@ static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_DMA_Init(void);
 /* USER CODE BEGIN PFP */
-
+void UART_Print(UART_HandleTypeDef *HUART, char *pData);
+void UART_Println(UART_HandleTypeDef *HUART, char *pData);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -154,11 +156,15 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim3);
   /* USER CODE END 2 */
-
+// / HAL_UART_Transmit(&huart1, (uint8_t *) andi, strlen(andi), 10);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+	  UART_Print(&huart1, "Andi");
+	  UART_Println(&huart1, "Mei");
+	  HAL_Delay(100);
 //	  for(uint8_t i=0; i<6; i++){
 //		  myLedMatrix_setmatrix(0, numberLap[i]);
 //		  myLedMatrix_setmatrix(1, numberLap[i]);
@@ -478,7 +484,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-
+void UART_Print(UART_HandleTypeDef *HUART, char *pData){
+	HAL_UART_Transmit(HUART, (uint8_t *)pData, strlen(pData), 10);
+}
+void UART_Println(UART_HandleTypeDef *HUART, char *pData){
+	HAL_UART_Transmit(HUART, (uint8_t *)pData, strlen(pData), 10);
+	char newLine[2] = "\r\n";
+	HAL_UART_Transmit(HUART, (uint8_t *)newLine, 2, 10);
+}
 /* USER CODE END 4 */
 
 /**
