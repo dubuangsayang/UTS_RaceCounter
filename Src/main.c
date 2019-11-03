@@ -87,8 +87,7 @@ uint32_t nilaiAdc[4];
 //static void MX_TIM3_Init(void);
 //static void MX_DMA_Init(void);
 /* USER CODE BEGIN PFP */
-void UART_Print(UART_HandleTypeDef *HUART, char *pData);
-void UART_Println(UART_HandleTypeDef *HUART, char *pData);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -146,9 +145,9 @@ int main(void)
   while (1)
   {
 
-	  UART_Print(&huart1, "Andi");
-	  UART_Println(&huart1, "Mei");
-	  HAL_Delay(100);
+//	  UART_Print(&huart1, "Andi");
+//	  UART_Println(&huart1, "Mei");
+//	  /HAL_Delay(100);
 	/*	Nothing happen in while(1)	*/
     /* USER CODE END WHILE */
 

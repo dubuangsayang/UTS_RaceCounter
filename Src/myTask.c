@@ -235,6 +235,13 @@ void myTask_DisplayOut(_Bool state){
 		myLedMatrix_setmatrix(0, numberLap[lap_A]);
 		myLedMatrix_setmatrix(1, numberLap[lap_B]);
 		myLedMatrix_setmatrix(2, numberLap[lap_C]);
+
+		/*	Diplay OUT in UART	*/
+		myUART_Println("------------------TIMER AND LAP------------------");
+		myUART_Print("LAP A:");	myUART_PrintNum(lap_A);	myUART_Print(" -> " );	myUART_PrintNum(minute_A[lap_A]);	myUART_Print(":");	myUART_PrintNum(second_A[lap_A]);	myUART_Print("."); myUART_PrintNum(miliSecond_A[lap_A]);	myUART_Println(" ");
+		myUART_Print("LAP B:");	myUART_PrintNum(lap_B);	myUART_Print(" -> " );	myUART_PrintNum(minute_B[lap_B]);	myUART_Print(":");	myUART_PrintNum(second_B[lap_B]);	myUART_Print("."); myUART_PrintNum(miliSecond_B[lap_B]);	myUART_Println(" ");
+		myUART_Print("LAP C:");	myUART_PrintNum(lap_C);	myUART_Print(" -> " );	myUART_PrintNum(minute_C[lap_C]);	myUART_Print(":");	myUART_PrintNum(second_C[lap_C]);	myUART_Print("."); myUART_PrintNum(miliSecond_C[lap_C]);	myUART_Println(" ");
+		myUART_Println("------------------#####################------------------");
 	}
 }
 

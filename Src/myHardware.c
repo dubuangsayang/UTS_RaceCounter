@@ -310,17 +310,6 @@ void MX_GPIO_Init(void)
 
 }
 
-/* USER CODE BEGIN 4 */
-
-void UART_Print(UART_HandleTypeDef *HUART, char *pData){
-	HAL_UART_Transmit(HUART, (uint8_t *)pData, strlen(pData), 10);
-}
-void UART_Println(UART_HandleTypeDef *HUART, char *pData){
-	HAL_UART_Transmit(HUART, (uint8_t *)pData, strlen(pData), 10);
-	char newLine[2] = "\r\n";
-	HAL_UART_Transmit(HUART, (uint8_t *)newLine, 2, 10);
-}
-/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.

@@ -16,6 +16,7 @@
 #include "myLCD.h"
 #include "myHardware.h"
 #include "myLedMatrix.h"
+#include "myUART.h"
 //#include "myADC.h"
 
 
